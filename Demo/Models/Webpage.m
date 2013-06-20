@@ -18,7 +18,10 @@
 @dynamic keywords;
 @dynamic relevances;
 
-// Create a new webpage object using array of keywords
+/**
+ Create a new webpage object using array of keywords
+ */
+
 + (void)newFromArray:(NSMutableArray *)arr
 {
     // Get the local context

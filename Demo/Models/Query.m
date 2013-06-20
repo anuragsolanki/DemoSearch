@@ -17,7 +17,10 @@
 @dynamic keywords;
 @dynamic relevances;
 
-// Create a new query object using array of keywords
+/**
+ Create a new query object using array of keywords
+ */
+
 + (void)newFromArray:(NSMutableArray *)arr
 {
     // Get the local context
@@ -54,9 +57,7 @@
         [newKeyword addRelevancesObject:relevance];
         [query addKeywordsObject:newKeyword];
         [query addRelevancesObject:relevance];
-    }
-    
+    }    
 }
-
 
 @end

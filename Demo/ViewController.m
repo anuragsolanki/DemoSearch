@@ -21,24 +21,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark -
 #pragma mark Actions
 
+/**
+ Action gets called on tapping compute button : the required result is computed here
+ */
 
-// Action gets called on tapping compute button : the required result is computed here
 - (IBAction)computeResult:(id)sender
-{
-    NSLog(@"compute clicked");
-    
+{    
     // First step: remove all data from db
     [Query MR_truncateAll];
     [Relevance MR_truncateAll];
@@ -86,7 +84,6 @@
         NSSet *keywords = query.keywords;
         for (Keyword *keyword in keywords) {
             for (Webpage *webpage in webpages) {
-//                if ([webpage.keywords containsObject:keyword]) {
                 NSPredicate *predicate1 = [NSPredicate predicateWithFormat:@"keyword = %@ AND webpage = %@", keyword, webpage];
                 Relevance *webpageRelevance = [Relevance MR_findFirstWithPredicate:predicate1 inContext:localContext];
                 NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"keyword = %@ AND query = %@", keyword, query];
@@ -97,25 +94,18 @@
             }
         }
 
-        // predicate so that webpages with 0 strength are not visible in result
+        // Set predicate so that webpages with strength '0' are not visible in result
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"strength != 0"];
         NSArray *webpages = [Webpage MR_findAllSortedBy:@"strength" ascending:NO withPredicate:predicate inContext:localContext];
         NSString *result1 = [NSString stringWithFormat:@"Q%i:", query.uniqueID];
         for (int i = 0; i < [webpages count]; i++) {
-//            NSLog(@"webpage: %i", ((Webpage *)webpages[i]).strength);
             result1 = [result1 stringByAppendingString:[NSString stringWithFormat:@" P%i", ((Webpage *)webpages[i]).uniqueID]];
         }
-//        NSLog(@"%@", result1);
         
         // Final Step: Update textView's text and display result
         _resultView.text = [_resultView.text stringByAppendingString:[NSString stringWithFormat:@"\n %@", result1]];
-        NSLog(@"result %@", _resultView.text);
+        // NSLog(@"result %@", _resultView.text);
     }
-    
-    
-//    NSLog(@" all webpage %@", [Webpage MR_findAll]);
-//    NSLog(@"%@", [Keyword MR_findAll]);
-//    NSLog(@"%@", [Relevance MR_findAll]);
 }
 
 @end

@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ Root View Controller to display user interface for input of data and output of computed result
+ */
+
 @interface ViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UIButton *computeBttn;
-@property (weak, nonatomic) IBOutlet UITextView *resultView;
+@property (weak, nonatomic) IBOutlet UIButton *computeBttn; // Tap this button to compute result
+@property (weak, nonatomic) IBOutlet UITextView *resultView;    // The result gets displayed in this view
 
 @end
